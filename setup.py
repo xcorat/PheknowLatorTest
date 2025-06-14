@@ -86,6 +86,11 @@ setup(
                       'types-requests',
                       'responses==0.10.12',
                       'tqdm',
-                      'urllib3'],
+                      'urllib3',
+                      # the following are added manually
+                      'matplotlib'
+                      'pyvis',
+                      'ipykernel',
+                      'ipywidgets'],
     extras_require=extras,
 )

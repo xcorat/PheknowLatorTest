@@ -1,0 +1,52 @@
+#!/usr/local/bin/docker
+# -*- version: 20.10.2 -*-
+
+############################################
+## DEVELOPMENT CONTAINER CONFIGURATION ##
+FROM python:3.11
+RUN apt-get update && apt-get install -y \
+    apt-transport-https \
+    software-properties-common \
+    unzip \
+    curl
+RUN wget -O - https://apt.corretto.aws/corretto.key | gpg --dearmor -o /usr/share/keyrings/corretto-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/corretto-keyring.gpg] https://apt.corretto.aws stable main" | tee /etc/apt/sources.list.d/corretto.list
+# RUN wget -O- https://apt.corretto.aws/corretto.key | apt-key add - && \
+RUN add-apt-repository 'deb https://apt.corretto.aws stable main' && \
+    apt-get update && \
+    apt-get install -y java-1.8.0-amazon-corretto-jdk
+
+
+############################################
+## PHEKNOWLATOR (PKT_KG) PROJECT SETTINGS ##
+# set working directory
+WORKDIR /PheKnowLator
+
+# We only need to create directories that might not exist in the mounted volume
+# Most directories will come from the mount
+
+# For development with volume mounts, we don't need to download files that should already exist in the mounted volume
+# If any required data files are missing, you can download them manually or uncomment specific downloads below
+# Example:
+# RUN curl -O https://storage.googleapis.com/pheknowlator/current_build/data/processed_data/edge_source_list.txt && mv edge_source_list.txt resources/
+
+# upgrade pip and setuptools (package itself will be installed in editable mode by devcontainer.json)
+RUN pip install --upgrade pip setuptools
+
+# set OWlTools memory (set to a high value, system will only use available memory)
+ENV OWLTOOLS_MEMORY=500g
+
+# set python environment encoding
+ENV PYTHONIOENCODING=utf-8
+
+# update permissions for all files
+RUN chmod -R 755 /PheKnowLator
+
+# Note: No COPY statements for code files as they will be mounted at runtime
+
+############################################
+## CONTAINER ACCESS ##
+
+# call bash script which contains entrypoint parameters
+ENTRYPOINT ["/PheKnowLator/entrypoint.sh"]
+CMD ["-h"]

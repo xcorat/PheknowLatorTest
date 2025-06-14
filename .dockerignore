@@ -16,6 +16,11 @@
 !resources/
 
 ##########################################
+## Adding notebooks and tests as well (sachi)
+!notebooks
+!tests
+
+##########################################
 ## PHEKNOWLATOR (PKT_KG) PACKAGE FILES ##
 # pkt_KG package files
 !pkt_kg/libs/owltools
