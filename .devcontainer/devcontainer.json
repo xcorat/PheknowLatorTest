@@ -1,0 +1,27 @@
+{
+	"name": "PheKnowLator Dev Container",
+	"dockerFile": "../Dockerfile.dev",
+	"workspaceFolder": "/PheKnowLator",
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"python.defaultInterpreterPath": "/usr/local/bin/python",
+				"python.linting.enabled": true,
+				"jupyter.alwaysTrustNotebooks": true
+			},
+			"extensions": [
+				"ms-python.python",
+				"ms-toolsai.jupyter",
+				"ms-python.vscode-pylance"
+			]
+		}
+	},
+	"mounts": [
+		"source=${localWorkspaceFolder},target=/PheKnowLator,type=bind"
+	],
+	"forwardPorts": [],
+	"remoteUser": "root",
+	"postCreateCommand": "pip install -e .",
+	"containerUser": "root",
+	"updateRemoteUserUID": false
+}
