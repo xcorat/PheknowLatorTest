@@ -88,7 +88,7 @@ setup(
                       'tqdm',
                       'urllib3',
                       # the following are added manually
-                      'matplotlib'
+                      'matplotlib',
                       'pyvis',
                       'ipykernel',
                       'ipywidgets'],
